@@ -1,0 +1,70 @@
+name: Build NSIS Installer
+
+on:
+  push:
+    branches: ["**"]
+    tags:
+      - "v*"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install NSIS
+        shell: powershell
+        run: |
+          choco install nsis -y
+          $env:PATH += ";C:\Program Files (x86)\NSIS"
+          makensis.exe /VERSION
+
+      - name: Build installer
+        shell: powershell
+        run: |
+          $nsi = "IntelMipiCamera.nsi"
+          if (!(Test-Path $nsi)) { throw "NSIS script not found: $nsi" }
+
+          makensis.exe /V4 $nsi
+
+          # Put outputs in a known folder for upload/release
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Get-ChildItem -Path . -Filter "*.exe" | ForEach-Object {
+            Copy-Item $_.FullName -Destination (Join-Path "dist" $_.Name) -Force
+          }
+
+          Write-Host "Built artifacts:"
+          Get-ChildItem dist | Format-Table -AutoSize
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: IntelMipiCamera-installer
+          path: dist/*.exe
+
+  release:
+    # Only run this job for tag pushes
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: IntelMipiCamera-installer
+          path: dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.exe
+          generate_release_notes: true
