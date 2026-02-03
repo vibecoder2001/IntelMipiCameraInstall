@@ -1,0 +1,3 @@
+[submodule "intel-mipicam-drivers-reference"]
+	path = drivers
+	url = https://github.com/vibecoder2001/intel-mipicam-drivers-reference.git
