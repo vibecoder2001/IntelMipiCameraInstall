@@ -1,39 +1,41 @@
-name: Build NSIS Installer
+name: Build Installer
 
 on:
   push:
-    branches: ["**"]
-    tags:
-      - "v*"
+    branches: [ "main" ]
+    tags: [ "v*" ]
   pull_request:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout (with submodules)
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          fetch-depth: 0
 
       - name: Install NSIS
-        shell: powershell
+        shell: pwsh
         run: |
           choco install nsis -y
-          $env:PATH += ";C:\Program Files (x86)\NSIS"
-          makensis.exe /VERSION
+          $nsisPath = "${env:ProgramFiles(x86)}\NSIS"
+          if (!(Test-Path $nsisPath)) { throw "NSIS not found at $nsisPath" }
+          Add-Content $env:GITHUB_PATH $nsisPath
 
-      - name: Build installer
-        shell: powershell
+      - name: Build EXE with makensis
+        shell: pwsh
         run: |
           $nsi = "IntelMipiCamera.nsi"
           if (!(Test-Path $nsi)) { throw "NSIS script not found: $nsi" }
 
+          # Optional: verify makensis is now resolvable
+          Get-Command makensis.exe | Format-List *
+
           makensis.exe /V4 $nsi
 
-          # Put outputs in a known folder for upload/release
           New-Item -ItemType Directory -Force -Path dist | Out-Null
           Get-ChildItem -Path . -Filter "*.exe" | ForEach-Object {
             Copy-Item $_.FullName -Destination (Join-Path "dist" $_.Name) -Force
@@ -49,21 +51,18 @@ jobs:
           path: dist/*.exe
 
   release:
-    # Only run this job for tag pushes
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    runs-on: windows-latest
 
     steps:
-      - name: Download build artifacts
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: IntelMipiCamera-installer
           path: dist
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release + upload assets
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*.exe
