@@ -313,7 +313,7 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
     Call EnsureCoreInstalled
 
     ; --------------------------------------------
-    ; Copy + rename graph / aiqb / cpf
+    ; Copy + rename graph / aiqb / cpf (from ADL bundle)
     ; --------------------------------------------
 
     Push $0
@@ -333,11 +333,10 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
         "${ROOT_ADL}\$1\graph_settings_OV2740_CJFLE23_ADL.xml" \
         "$R0graph_settings_OV2740_CJFLE23_TGL.xml"
 
-      ; aiqb / cpf → System32 root
+      ; aiqb / cpf → real System32 root
       CopyFiles /SILENT \
         "${ROOT_ADL}\$1\OV2740_CJFLE23_ADL.aiqb" \
         "$R1\OV2740_CJFLE23_TGL.aiqb"
-
       CopyFiles /SILENT \
         "${ROOT_ADL}\$1\OV2740_CJFLE23_ADL.cpf" \
         "$R1\OV2740_CJFLE23_TGL.cpf"
@@ -346,22 +345,24 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
       CopyFiles /SILENT \
         "${ROOT_ADL}\$1\OV2740_CJFLE23_ADL.aiqb" \
         "$WINDIR\SysWOW64\OV2740_CJFLE23_TGL.aiqb"
-
       CopyFiles /SILENT \
         "${ROOT_ADL}\$1\OV2740_CJFLE23_ADL.cpf" \
         "$WINDIR\SysWOW64\OV2740_CJFLE23_TGL.cpf"
 
       StrCpy $InstalledHackTgl "1"
-
-      FindClose $0
+    ${Else}
+      DetailPrint "OV2740: could not find ADL extension folder (ov2740_extension_lenovo_jp2.inf_amd64_*)"
     ${EndIf}
+
+    ; IMPORTANT: always close FindFirst handle
+    FindClose $0
 
     Pop $R1
     Pop $R0
     Pop $1
     Pop $0
 
-    ; Use ADL sensor + iacamera extension
+    ; Use ADL sensor + iacamera extension on TGL
     !insertmacro InstallInf "${ROOT_ADL}" "ov2740.inf_amd64_*" "ov2740.inf"
     !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
 
