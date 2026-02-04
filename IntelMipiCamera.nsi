@@ -429,6 +429,31 @@ Section /o "OV8856 (ADL / JSL)" SecOv8856
   ${EndIf}
 SectionEnd
 
+; OV9734: JSL only
+;   - JSL: copy JSL overlay graph_settings + aiqb/cpf to System32\drivers
+;          then install ADL ov9734 (NO sensor extension) + ADL iacamera64 extension
+Section /o "OV9734 (JSL)" SecOv9734
+  ${If} $CamPlatform == "jsl"
+    Call EnsureCoreInstalled
+
+    ; Copy overlay graph_settings + aiqb + cpf into real System32\drivers
+    Push $R0
+    !insertmacro GetRealDriversDir $R0
+
+    CopyFiles /SILENT "${ROOT_JSL_OVERLAY}\graph_settings_OV9734_CJAJ813_JSLP.xml" "$R0"
+    CopyFiles /SILENT "${ROOT_JSL_OVERLAY}\OV9734_CJAJ813_JSLP.aiqb"              "$R0"
+    CopyFiles /SILENT "${ROOT_JSL_OVERLAY}\OV9734_CJAJ813_JSLP.cpf"               "$R0"
+
+    Pop $R0
+    StrCpy $InstalledHackJsl "1"
+
+    ; Install ADL sensor INF + ADL iacamera extension
+    ; exact folder name as provided
+    !insertmacro InstallInf "${ROOT_ADL}" "ov9734.inf_amd64_6c2deae5b33c96cf" "ov9734.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+  ${EndIf}
+SectionEnd
+
 ; HI556: ADL OR MTL
 Section /o "HI556 (ADL / MTL)" SecHi556
   ${If} $CamPlatform == "adl"
@@ -528,6 +553,7 @@ Function .onInit
     !insertmacro EnableSectionSelectable ${SecOv2740}
     !insertmacro EnableSectionSelectable ${SecOv5675}
     !insertmacro EnableSectionSelectable ${SecOv8856}
+    !insertmacro EnableSectionSelectable ${SecOv9734}
     !insertmacro EnableSectionSelectable ${SecHi556}
     !insertmacro EnableSectionSelectable ${SecOv08x40}
 
@@ -538,6 +564,7 @@ Function .onInit
     !insertmacro SelectSection ${SecOv2740}
     !insertmacro SelectSection ${SecOv5675}
     !insertmacro SelectSection ${SecOv8856}
+    !insertmacro SelectSection ${SecOv9734}
     !insertmacro SelectSection ${SecHi556}
     !insertmacro SelectSection ${SecOv08x40}
   ${Else}
@@ -548,6 +575,7 @@ Function .onInit
     !insertmacro DisableSection ${SecOv2740}
     !insertmacro DisableSection ${SecOv5675}
     !insertmacro DisableSection ${SecOv8856}
+    !insertmacro DisableSection ${SecOv9734}
     !insertmacro DisableSection ${SecHi556}
     !insertmacro DisableSection ${SecOv08x40}
 
@@ -569,8 +597,10 @@ Function .onInit
     ${If} $CamPlatform == "jsl"
       !insertmacro EnableSectionSelectable ${SecOv5675}
       !insertmacro EnableSectionSelectable ${SecOv8856}
+      !insertmacro EnableSectionSelectable ${SecOv9734}
       !insertmacro SelectSection ${SecOv5675}
       !insertmacro SelectSection ${SecOv8856}
+      !insertmacro SelectSection ${SecOv9734}
     ${EndIf}
 
     ${If} $CamPlatform == "adl"
@@ -631,6 +661,9 @@ Section "Uninstall"
   Delete /REBOOTOK "$R0graph_settings_OV8856_CJAJ813_JSLP.xml"
   Delete /REBOOTOK "$R0OV8856_CJAJ813_JSLP.aiqb"
   Delete /REBOOTOK "$R0OV8856_CJAJ813_JSLP.cpf"
+  Delete /REBOOTOK "$R0graph_settings_OV9734_CJAJ813_JSLP.xml"
+  Delete /REBOOTOK "$R0OV9734_CJAJ813_JSLP.aiqb"
+  Delete /REBOOTOK "$R0OV9734_CJAJ813_JSLP.cpf"
 
   ; TGL (graph in real drivers, aiqb/cpf in real system32 + syswow64)
   Delete /REBOOTOK "$R0graph_settings_OV2740_CJFLE23_TGL.xml"

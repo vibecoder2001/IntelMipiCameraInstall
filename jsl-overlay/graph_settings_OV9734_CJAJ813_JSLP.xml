@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2020 Intel Corporation
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<graph_settings version="IPU6_SE_JSL_20210712.0.1.0.247.1.2021.9.14.14.2.13">
+<sensor_modes sensor_name="ov9734" csi_port="0" metadata="0" interlaced="0" bayer_order="GRBG">
+    <available_bit_per_pixel>
+        <bpp value="10"/>
+    </available_bit_per_pixel>
+    <pll_configs>
+        <pll_config bpp="0" pixel_rate_csi="0" pixel_rate="0" id="0"/>
+    </pll_configs>
+    <sensor_mode name="Full" id="0" width="1296" height="734" fps="30" min_llp="0" min_fll="0" min_fps="0" max_out_width="1296" max_out_height="734" bpp="10" sensor_type="BAYER" pdaf_type="PDAFNone" flip_h="0" flip_v="0" conversion_gain="1" dol_mode="NoDol">
+        <pixel_array>
+            <input width="1296" height="734" left="0" top="0"/>
+            <output width="1296" height="734" left="0" top="0"/>
+        </pixel_array>
+        <binner h_factor="1" v_factor="1">
+            <input width="1296" height="734" left="0" top="0"/>
+            <output width="1296" height="734" left="0" top="0"/>
+        </binner>
+        <scaler num_factor="1" denom_factor="1">
+            <input width="1296" height="734" left="0" top="0"/>
+            <output width="1296" height="734" left="0" top="0"/>
+        </scaler>
+        <pdaf width="0" height="0"/>
+    </sensor_mode>
+</sensor_modes>
+<selected_resolutions>
+  <FPS value="30">
+    <sensor>
+      <resolution width="1296" height="734" />
+    </sensor>
+    <isys_cropped_output>
+      <resolution width="320" height="240" />
+      <resolution width="640" height="360" />
+      <resolution width="640" height="480" />
+      <resolution width="1280" height="720" />
+    </isys_cropped_output>
+    <preview>
+      <resolution width="320" height="240" />
+      <resolution width="640" height="360" />
+      <resolution width="640" height="480" />
+      <resolution width="1280" height="720" />
+    </preview>
+    <video>
+      <resolution width="320" height="240" />
+      <resolution width="640" height="360" />
+      <resolution width="640" height="480" />
+      <resolution width="1280" height="720" />
+    </video>
+    <stills>
+      <resolution width="320" height="240" />
+      <resolution width="640" height="360" />
+      <resolution width="640" height="480" />
+      <resolution width="1280" height="720" />
+    </stills>
+    <raw />
+    <face_detection />
+  </FPS>
+</selected_resolutions>
+<settings key="8000" id="100200" active_outputs="1" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0">
+  <video0 width="320" height="240" stream_id="60006" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <tnr7us_video>
+    <output format="YUV420_8_SP" width="320" height="240" peer="video0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="80" height="60" />
+    <recsim_output format="YUV420_8_SP" private="1" width="80" height="60" />
+    <reference_output format="YUV420_8_SP" private="1" width="80" height="60" />
+    <tnr_scale_lb>
+      <input width="320" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="80" height="60" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="320" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="80" height="60" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_video>
+  <isa_video>
+    <ds0 format="YUV420_8_SP" width="320" height="240" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="424" height="240" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="424" height="240" top="0" left="52" bottom="0" right="52" />
+      <output width="320" height="240" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="424" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="424" height="240" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_video>
+</settings>
+<settings key="8001" id="100200" active_outputs="1" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0">
+  <video0 width="640" height="360" stream_id="60006" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <tnr7us_video>
+    <output format="YUV420_8_SP" width="640" height="360" peer="video0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="160" height="90" />
+    <recsim_output format="YUV420_8_SP" private="1" width="160" height="90" />
+    <reference_output format="YUV420_8_SP" private="1" width="160" height="90" />
+    <tnr_scale_lb>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="90" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="90" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_video>
+  <isa_video>
+    <ds0 format="YUV420_8_SP" width="640" height="360" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_video>
+</settings>
+<settings key="8002" id="100200" active_outputs="1" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0">
+  <video0 width="640" height="480" stream_id="60006" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <tnr7us_video>
+    <output format="YUV420_8_SP" width="640" height="480" peer="video0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="160" height="120" />
+    <recsim_output format="YUV420_8_SP" private="1" width="160" height="120" />
+    <reference_output format="YUV420_8_SP" private="1" width="160" height="120" />
+    <tnr_scale_lb>
+      <input width="640" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="120" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="640" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="120" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_video>
+  <isa_video>
+    <ds0 format="YUV420_8_SP" width="640" height="480" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="848" height="480" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="848" height="480" top="0" left="104" bottom="0" right="104" />
+      <output width="640" height="480" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="848" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="848" height="480" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_video>
+</settings>
+<settings key="8003" id="100200" active_outputs="1" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0" golden="true">
+  <video0 width="1280" height="720" stream_id="60006" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <tnr7us_video>
+    <output format="YUV420_8_SP" width="1280" height="720" peer="video0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="320" height="180" />
+    <recsim_output format="YUV420_8_SP" private="1" width="320" height="180" />
+    <reference_output format="YUV420_8_SP" private="1" width="320" height="180" />
+    <tnr_scale_lb>
+      <input width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+      <output width="320" height="180" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+      <output width="320" height="180" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_video>
+  <isa_video>
+    <ds0 format="YUV420_8_SP" width="1280" height="720" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="1296" height="732" top="6" left="8" bottom="6" right="8" />
+      <output width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_video>
+</settings>
+<settings key="8004" id="100200" active_outputs="2" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0">
+  <stilltnr0 width="320" height="240" stream_id="60009" bpp="8" format="Linear" />
+  <still0 width="320" height="240" stream_id="60000" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <isa_stills>
+    <ds0 format="YUV420_8_SP" width="320" height="240" peer="still0" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="424" height="240" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="424" height="240" top="0" left="52" bottom="0" right="52" />
+      <output width="320" height="240" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="424" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="424" height="240" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills>
+  <tnr7us_stills>
+    <output format="YUV420_8_SP" width="320" height="240" peer="stilltnr0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="80" height="60" />
+    <recsim_output format="YUV420_8_SP" private="1" width="80" height="60" />
+    <reference_output format="YUV420_8_SP" private="1" width="80" height="60" />
+    <tnr_scale_lb>
+      <input width="320" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="80" height="60" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="320" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="80" height="60" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_stills>
+  <isa_stills_tnr>
+    <ds0 format="YUV420_8_SP" width="320" height="240" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="424" height="240" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="424" height="240" top="0" left="52" bottom="0" right="52" />
+      <output width="320" height="240" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="424" height="240" top="0" left="0" bottom="0" right="0" />
+      <output width="424" height="240" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills_tnr>
+</settings>
+<settings key="8005" id="100200" active_outputs="2" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0">
+  <stilltnr0 width="640" height="360" stream_id="60009" bpp="8" format="Linear" />
+  <still0 width="640" height="360" stream_id="60000" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <isa_stills>
+    <ds0 format="YUV420_8_SP" width="640" height="360" peer="still0" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills>
+  <tnr7us_stills>
+    <output format="YUV420_8_SP" width="640" height="360" peer="stilltnr0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="160" height="90" />
+    <recsim_output format="YUV420_8_SP" private="1" width="160" height="90" />
+    <reference_output format="YUV420_8_SP" private="1" width="160" height="90" />
+    <tnr_scale_lb>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="90" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="90" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_stills>
+  <isa_stills_tnr>
+    <ds0 format="YUV420_8_SP" width="640" height="360" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="640" height="360" top="0" left="0" bottom="0" right="0" />
+      <output width="640" height="360" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills_tnr>
+</settings>
+<settings key="8006" id="100200" active_outputs="2" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0">
+  <stilltnr0 width="640" height="480" stream_id="60009" bpp="8" format="Linear" />
+  <still0 width="640" height="480" stream_id="60000" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <isa_stills>
+    <ds0 format="YUV420_8_SP" width="640" height="480" peer="still0" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="848" height="480" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="848" height="480" top="0" left="104" bottom="0" right="104" />
+      <output width="640" height="480" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="848" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="848" height="480" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills>
+  <tnr7us_stills>
+    <output format="YUV420_8_SP" width="640" height="480" peer="stilltnr0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="160" height="120" />
+    <recsim_output format="YUV420_8_SP" private="1" width="160" height="120" />
+    <reference_output format="YUV420_8_SP" private="1" width="160" height="120" />
+    <tnr_scale_lb>
+      <input width="640" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="120" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="640" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="160" height="120" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_stills>
+  <isa_stills_tnr>
+    <ds0 format="YUV420_8_SP" width="640" height="480" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="848" height="480" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="848" height="480" top="0" left="104" bottom="0" right="104" />
+      <output width="640" height="480" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="848" height="480" top="0" left="0" bottom="0" right="0" />
+      <output width="848" height="480" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills_tnr>
+</settings>
+<settings key="8007" id="100200" active_outputs="2" dvs="0" power_factor="0" fps="30" flow="HighPerformanceTnr7us" flip_v="0" flip_h="0" pdaf_type="0" golden="true">
+  <stilltnr0 width="1280" height="720" stream_id="60009" bpp="8" format="Linear" />
+  <still0 width="1280" height="720" stream_id="60000" bpp="8" format="Linear" />
+  <sensor vflip="0" hflip="0" mode_id="Full">
+            <port_0 format="BG10" width="1296" height="734" />
+        </sensor>
+  <csi_be>
+    <output format="GR10" width="1296" height="734" />
+    <stream2mmio>
+      <input width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="734" top="0" left="0" bottom="0" right="0" />
+    </stream2mmio>
+    <tuning_mode value="0" />
+  </csi_be>
+  <isa_stills>
+    <ds0 format="YUV420_8_SP" width="1280" height="720" peer="still0" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="1296" height="732" top="6" left="8" bottom="6" right="8" />
+      <output width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills>
+  <tnr7us_stills>
+    <output format="YUV420_8_SP" width="1280" height="720" peer="stilltnr0" />
+    <scaled_reference_output format="YUV420_8_SP" private="1" width="320" height="180" />
+    <recsim_output format="YUV420_8_SP" private="1" width="320" height="180" />
+    <reference_output format="YUV420_8_SP" private="1" width="320" height="180" />
+    <tnr_scale_lb>
+      <input width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+      <output width="320" height="180" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_lb>
+    <tnr_scale_fp>
+      <input width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+      <output width="320" height="180" top="0" left="0" bottom="0" right="0" />
+    </tnr_scale_fp>
+    <tuning_mode value="0" />
+  </tnr7us_stills>
+  <isa_stills_tnr>
+    <ds0 format="YUV420_8_SP" width="1280" height="720" />
+    <b2i_ds_1_0_0>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </b2i_ds_1_0_0>
+    <pixelformatter>
+      <input width="1296" height="734" top="2" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </pixelformatter>
+    <pxl_crop_yuv_a>
+      <input width="1296" height="732" top="6" left="8" bottom="6" right="8" />
+      <output width="1280" height="720" top="0" left="0" bottom="0" right="0" />
+    </pxl_crop_yuv_a>
+    <padder_yuv_a>
+      <input width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+      <output width="1296" height="732" top="0" left="0" bottom="0" right="0" />
+    </padder_yuv_a>
+    <tuning_mode value="0" />
+  </isa_stills_tnr>
+</settings>
+</graph_settings>
