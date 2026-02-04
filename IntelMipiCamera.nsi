@@ -11,7 +11,7 @@
 !include StrFunc.nsh
 
 !define APPNAME  "IntelMipiCamera"
-!define VERSION  "1.0.0"
+!define VERSION  "1.0.1"
 
 Caption "${APPNAME} installer"
 Name "${APPNAME} ${VERSION}"
@@ -277,6 +277,24 @@ Section /o "IMX258 (KBL)" SecImx258
   ${EndIf}
 SectionEnd
 
+; KBL only
+Section /o "OV5670 (KBL)" SecOv5670
+  ${If} $CamPlatform == "kbl"
+    Call EnsureCoreInstalled
+    ; exact folder name as provided
+    !insertmacro InstallInf "${ROOT_KBL}" "ov5670.inf_amd64_38cd25de8946b8dd" "ov5670.inf"
+  ${EndIf}
+SectionEnd
+
+; KBL only
+Section /o "OV13858 (KBL)" SecOv13858
+  ${If} $CamPlatform == "kbl"
+    Call EnsureCoreInstalled
+    ; exact folder name as provided
+    !insertmacro InstallInf "${ROOT_KBL}" "ov13858.inf_amd64_17de33df6e2ea206" "ov13858.inf"
+  ${EndIf}
+SectionEnd
+
 ; OV2740: ADL OR TGL
 ; =========================================================
 Section /o "OV2740 (ADL / TGL)" SecOv2740
@@ -504,6 +522,9 @@ Function .onInit
   ; If platform not detected, enable+select all sensors.
   ${If} $CamPlatform == ""
     !insertmacro EnableSectionSelectable ${SecImx258}
+    !insertmacro EnableSectionSelectable ${SecOv5670}
+    !insertmacro EnableSectionSelectable ${SecOv13858}
+
     !insertmacro EnableSectionSelectable ${SecOv2740}
     !insertmacro EnableSectionSelectable ${SecOv5675}
     !insertmacro EnableSectionSelectable ${SecOv8856}
@@ -511,6 +532,9 @@ Function .onInit
     !insertmacro EnableSectionSelectable ${SecOv08x40}
 
     !insertmacro SelectSection ${SecImx258}
+    !insertmacro SelectSection ${SecOv5670}
+    !insertmacro SelectSection ${SecOv13858}
+
     !insertmacro SelectSection ${SecOv2740}
     !insertmacro SelectSection ${SecOv5675}
     !insertmacro SelectSection ${SecOv8856}
@@ -519,6 +543,8 @@ Function .onInit
   ${Else}
     ; Start with everything disabled/unselected
     !insertmacro DisableSection ${SecImx258}
+    !insertmacro DisableSection ${SecOv5670}
+    !insertmacro DisableSection ${SecOv13858}
     !insertmacro DisableSection ${SecOv2740}
     !insertmacro DisableSection ${SecOv5675}
     !insertmacro DisableSection ${SecOv8856}
@@ -527,7 +553,12 @@ Function .onInit
 
     ${If} $CamPlatform == "kbl"
       !insertmacro EnableSectionSelectable ${SecImx258}
+      !insertmacro EnableSectionSelectable ${SecOv5670}
+      !insertmacro EnableSectionSelectable ${SecOv13858}
+
       !insertmacro SelectSection ${SecImx258}
+      !insertmacro SelectSection ${SecOv5670}
+      !insertmacro SelectSection ${SecOv13858}
     ${EndIf}
 
     ${If} $CamPlatform == "tgl"
