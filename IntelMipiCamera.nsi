@@ -281,7 +281,6 @@ SectionEnd
 Section /o "OV5670 (KBL)" SecOv5670
   ${If} $CamPlatform == "kbl"
     Call EnsureCoreInstalled
-    ; exact folder name as provided
     !insertmacro InstallInf "${ROOT_KBL}" "ov5670.inf_amd64_*" "ov5670.inf"
   ${EndIf}
 SectionEnd
@@ -290,12 +289,13 @@ SectionEnd
 Section /o "OV13858 (KBL)" SecOv13858
   ${If} $CamPlatform == "kbl"
     Call EnsureCoreInstalled
-    ; exact folder name as provided
     !insertmacro InstallInf "${ROOT_KBL}" "ov13858.inf_amd64_*" "ov13858.inf"
   ${EndIf}
 SectionEnd
 
 ; OV2740: ADL OR TGL
+;   - ADL: install ov2740 + sensor extension + *AVL* iacamera extension
+;   - TGL: copy+rename graph/aiqb/cpf from ADL bundle, install ov2740 + *AVL* iacamera extension
 ; =========================================================
 Section /o "OV2740 (ADL / TGL)" SecOv2740
 
@@ -303,19 +303,16 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
 
     Call EnsureCoreInstalled
 
-    ; Base sensor + extensions
+    ; Base sensor + sensor extension
     !insertmacro InstallInf "${ROOT_ADL}" "ov2740.inf_amd64_*" "ov2740.inf"
     !insertmacro InstallInf "${ROOT_ADL}" "ov2740_extension_lenovo_jp2.inf_amd64_*" "ov2740_extension_Lenovo_JP2.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
 
   ${ElseIf} $CamPlatform == "tgl"
 
     Call EnsureCoreInstalled
 
-    ; --------------------------------------------
     ; Copy + rename graph / aiqb / cpf (from ADL bundle)
-    ; --------------------------------------------
-
     Push $0
     Push $1
     Push $R0
@@ -323,8 +320,6 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
 
     FindFirst $0 $1 "${ROOT_ADL}\ov2740_extension_lenovo_jp2.inf_amd64_*"
     ${If} $1 != ""
-
-      ; Real directories (NO redirection possible)
       !insertmacro GetRealDriversDir $R0
       !insertmacro GetRealSystem32  $R1
 
@@ -354,7 +349,6 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
       DetailPrint "OV2740: could not find ADL extension folder (ov2740_extension_lenovo_jp2.inf_amd64_*)"
     ${EndIf}
 
-    ; IMPORTANT: always close FindFirst handle
     FindClose $0
 
     Pop $R1
@@ -362,29 +356,25 @@ Section /o "OV2740 (ADL / TGL)" SecOv2740
     Pop $1
     Pop $0
 
-    ; Use ADL sensor + iacamera extension on TGL
+    ; Install ADL sensor INF + *AVL* iacamera extension on TGL
     !insertmacro InstallInf "${ROOT_ADL}" "ov2740.inf_amd64_*" "ov2740.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
 
   ${EndIf}
 
 SectionEnd
 
-; OV5675: ADL OR JSL
-;   - ADL: install ov5675 + sensor extension + iacamera64 extension
-;   - JSL: install ADL ov5675 (NO sensor extension) + ADL iacamera64 extension
-;          then copy JSL overlay graph_settings + aiqb/cpf to System32\drivers
+; OV5675: ADL OR JSL (AVL extension)
 Section /o "OV5675 (ADL / JSL)" SecOv5675
   ${If} $CamPlatform == "adl"
     Call EnsureCoreInstalled
     !insertmacro InstallInf "${ROOT_ADL}" "ov5675.inf_amd64_*" "ov5675.inf"
     !insertmacro InstallInf "${ROOT_ADL}" "ov5675_extension_lenovo.inf_amd64_*" "ov5675_extension_Lenovo.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
 
   ${ElseIf} $CamPlatform == "jsl"
     Call EnsureCoreInstalled
 
-    ; Copy overlay graph_settings + aiqb + cpf into System32\drivers
     Push $R0
     !insertmacro GetRealDriversDir $R0
 
@@ -395,25 +385,21 @@ Section /o "OV5675 (ADL / JSL)" SecOv5675
     Pop $R0
     StrCpy $InstalledHackJsl "1"
 
-    ; JSL: install ADL sensor INF (no sensor extension), plus ADL iacamera64 extension
     !insertmacro InstallInf "${ROOT_ADL}" "ov5675.inf_amd64_*" "ov5675.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
   ${EndIf}
 SectionEnd
 
-; OV8856: ADL OR JSL
-;   - ADL: install ov8856 + iacamera64 extension
-;   - JSL: install ADL ov8856 (NO sensor extension) + ADL iacamera64 extension
-;          then copy JSL overlay graph_settings + aiqb/cpf to System32\drivers
+; OV8856: ADL OR JSL (AVL extension)
 Section /o "OV8856 (ADL / JSL)" SecOv8856
   ${If} $CamPlatform == "adl"
     Call EnsureCoreInstalled
     !insertmacro InstallInf "${ROOT_ADL}" "ov8856.inf_amd64_*" "ov8856.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
 
   ${ElseIf} $CamPlatform == "jsl"
     Call EnsureCoreInstalled
-    ; Copy overlay graph_settings + aiqb + cpf into System32\drivers
+
     Push $R0
     !insertmacro GetRealDriversDir $R0
 
@@ -424,20 +410,16 @@ Section /o "OV8856 (ADL / JSL)" SecOv8856
     Pop $R0
     StrCpy $InstalledHackJsl "1"
 
-    ; JSL: install ADL sensor INF (no sensor extension), plus ADL iacamera64 extension
     !insertmacro InstallInf "${ROOT_ADL}" "ov8856.inf_amd64_*" "ov8856.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
   ${EndIf}
 SectionEnd
 
-; OV9734: JSL only
-;   - JSL: copy JSL overlay graph_settings + aiqb/cpf to System32\drivers
-;          then install ADL ov9734 (NO sensor extension) + ADL iacamera64 extension
+; OV9734: JSL only (AVL extension)
 Section /o "OV9734 (JSL)" SecOv9734
   ${If} $CamPlatform == "jsl"
     Call EnsureCoreInstalled
 
-    ; Copy overlay graph_settings + aiqb + cpf into real System32\drivers
     Push $R0
     !insertmacro GetRealDriversDir $R0
 
@@ -448,20 +430,20 @@ Section /o "OV9734 (JSL)" SecOv9734
     Pop $R0
     StrCpy $InstalledHackJsl "1"
 
-    ; Install ADL sensor INF + ADL iacamera extension
-    ; exact folder name as provided
     !insertmacro InstallInf "${ROOT_ADL}" "ov9734.inf_amd64_*" "ov9734.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
   ${EndIf}
 SectionEnd
 
 ; HI556: ADL OR MTL
+;   - ADL: use AVL extension
+;   - MTL: keep oasismlk (unchanged)
 Section /o "HI556 (ADL / MTL)" SecHi556
   ${If} $CamPlatform == "adl"
     Call EnsureCoreInstalled
     !insertmacro InstallInf "${ROOT_ADL}" "hi556.inf_amd64_*" "hi556.inf"
     !insertmacro InstallInf "${ROOT_ADL}" "hi556_extension_dell.inf_amd64_*" "hi556_extension_dell.inf"
-    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_dell_millennio.inf_amd64_*" "iacamera64_extension_dell_millennio.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_avl.inf_amd64_*" "iacamera64_extension_avl.inf"
 
   ${ElseIf} $CamPlatform == "mtl"
     Call EnsureCoreInstalled
@@ -471,7 +453,7 @@ Section /o "HI556 (ADL / MTL)" SecHi556
   ${EndIf}
 SectionEnd
 
-; OV08x40: MTL only
+; OV08x40: MTL only (unchanged, because script doesn't have ADL/TGL/JSL OV08x40 paths)
 Section /o "OV08x40 (MTL)" SecOv08x40
   ${If} $CamPlatform == "mtl"
     Call EnsureCoreInstalled
@@ -544,8 +526,7 @@ Function .onInit
     !insertmacro EnableSectionSelectable ${SecCore}
   ${EndIf}
 
-    ; Sensors: enable+select valid ones.
-  ; If platform not detected, enable+select all sensors.
+  ; Sensors: enable+select valid ones.
   ${If} $CamPlatform == ""
     !insertmacro EnableSectionSelectable ${SecImx258}
     !insertmacro EnableSectionSelectable ${SecOv5670}
@@ -584,7 +565,6 @@ Function .onInit
       !insertmacro EnableSectionSelectable ${SecImx258}
       !insertmacro EnableSectionSelectable ${SecOv5670}
       !insertmacro EnableSectionSelectable ${SecOv13858}
-
       !insertmacro SelectSection ${SecImx258}
       !insertmacro SelectSection ${SecOv5670}
       !insertmacro SelectSection ${SecOv13858}
@@ -609,7 +589,6 @@ Function .onInit
       !insertmacro EnableSectionSelectable ${SecOv5675}
       !insertmacro EnableSectionSelectable ${SecOv8856}
       !insertmacro EnableSectionSelectable ${SecHi556}
-
       !insertmacro SelectSection ${SecOv2740}
       !insertmacro SelectSection ${SecOv5675}
       !insertmacro SelectSection ${SecOv8856}
@@ -619,7 +598,6 @@ Function .onInit
     ${If} $CamPlatform == "mtl"
       !insertmacro EnableSectionSelectable ${SecOv08x40}
       !insertmacro EnableSectionSelectable ${SecHi556}
-
       !insertmacro SelectSection ${SecOv08x40}
       !insertmacro SelectSection ${SecHi556}
     ${EndIf}
