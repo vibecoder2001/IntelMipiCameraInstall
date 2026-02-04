@@ -282,7 +282,7 @@ Section /o "OV5670 (KBL)" SecOv5670
   ${If} $CamPlatform == "kbl"
     Call EnsureCoreInstalled
     ; exact folder name as provided
-    !insertmacro InstallInf "${ROOT_KBL}" "ov5670.inf_amd64_38cd25de8946b8dd" "ov5670.inf"
+    !insertmacro InstallInf "${ROOT_KBL}" "ov5670.inf_amd64_*" "ov5670.inf"
   ${EndIf}
 SectionEnd
 
@@ -291,7 +291,7 @@ Section /o "OV13858 (KBL)" SecOv13858
   ${If} $CamPlatform == "kbl"
     Call EnsureCoreInstalled
     ; exact folder name as provided
-    !insertmacro InstallInf "${ROOT_KBL}" "ov13858.inf_amd64_17de33df6e2ea206" "ov13858.inf"
+    !insertmacro InstallInf "${ROOT_KBL}" "ov13858.inf_amd64_*" "ov13858.inf"
   ${EndIf}
 SectionEnd
 
@@ -449,7 +449,7 @@ Section /o "OV9734 (JSL)" SecOv9734
 
     ; Install ADL sensor INF + ADL iacamera extension
     ; exact folder name as provided
-    !insertmacro InstallInf "${ROOT_ADL}" "ov9734.inf_amd64_6c2deae5b33c96cf" "ov9734.inf"
+    !insertmacro InstallInf "${ROOT_ADL}" "ov9734.inf_amd64_*" "ov9734.inf"
     !insertmacro InstallInf "${ROOT_ADL}" "iacamera64_extension_lenovo.inf_amd64_*" "iacamera64_extension_lenovo.inf"
   ${EndIf}
 SectionEnd
